@@ -1,0 +1,31 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <title>Document</title>
+</head>
+<body>
+    <div class="deleta_post_container">
+        <div class="deleta_post_content">
+            <form action="" method="POST">
+                {% csrf_token %}
+                <h1>Deseja realmente excluir a postagem?</h1>
+                <div class="btn-box">
+                    <div class="box-btn-delete">
+                        
+                        <input class="delete_input" name="delete" type="submit" value="Sim">
+                    </div>
+                    <div class="box-btn-cancel">
+                        <a class="cancel-btn" href="{% url 'index'%}">Cancelar</a>
+                    </div>
+                </div>       
+            </form>
+        </div>
+    </div>
+</body>
+</html>

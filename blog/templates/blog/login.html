@@ -1,0 +1,26 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <title>Document</title>
+</head>
+<body class="body-login" > 
+    <div class="login-container">
+        <form class="form-login" action="{% url 'login' %}" method="POST">
+            {% csrf_token %}
+            {% include 'partials/_messages.html' %}
+            <label class="label" for="email">Email</label> 
+            <input  class="input" type="email" name="email" placeholder="email" required >
+            <label class="label" for="senha">Senha</label>
+            <input class="input" type="password" name="senha" placeholder="senha" required>  
+            <button class="submit-button" type="submit">Entrar</button>
+            <a class="link-item" href="{% url 'cadastro'%}"><br>Ainda não tem conta? Cadastre-se aqui</a>
+        </form>
+    </div>
+</body>
+<!-- </html> -->

@@ -1,0 +1,67 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+
+    <title>Document</title>
+</head>
+
+<body class="body-container">
+    <nav class="top-menu">
+        <div class="nav_links">
+            {% for usuario in usuarios%}
+            {%if usuario.nivel_acesso == 'AU'%}
+            <a href="{% url 'criar_postagem' %}">Criar postagem</a>
+            {%endif%}
+
+            {%endfor%}
+            <a class="link-item" href="{% url 'index' %}">Home</a>
+        </div>
+        <div class="nav_links">
+            <a class="link-item" href="{% url 'logout' %}">Sair</a>
+        </div>
+    </nav>
+
+    <div class="container_create_post">
+
+        <div class="block_container">
+
+            <h1 class="post_create_heading">criar postagem</h1>
+
+            <form action="{% url 'criar_postagem' %}" method="POST" enctype="multipart/form-data">
+                {% include 'partials/_messages.html' %}
+                {% csrf_token %}
+                <div class="input_field_create_post" >
+                    Categoria:
+                    <select name="categoria" id="categoria">
+                        {% for categoria in categorias %}
+                        <option value="{{ categoria }}">{{ categoria }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="input_field_create_post">
+                    <label for="titulo">Titulo:</label>
+                    <input class="input_title"  type="text" name="titulo" placeholder="titulo">
+                </div>
+                <div class="input_field_create_post j_center " >
+                    <textarea  type="text" name="publicacao" rows="30" cols="80" placeholder="Faça uma postagem"></textarea>
+                </div>
+                <div class="btn_publicar_post">
+                    <div class="picture">
+                        <label class="picture" for="pictureInput">Escolha uma imagem</label>
+                        <input type="file"  name="pictureInput" id="pictureInput">
+                    </div > 
+                    <button class="btn-publicar" type="submit">Publicar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+
+</html>

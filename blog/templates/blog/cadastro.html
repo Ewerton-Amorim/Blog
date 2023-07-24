@@ -1,0 +1,31 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <title>Document</title>
+</head>
+<body class="body-login">
+ 
+
+    <div class="login-container">
+        <form class="form-login" action="{% url 'cadastro' %}" method="POST">
+            {% include 'partials/_messages.html' %}
+            {% csrf_token %} 
+            <label class="label" for="nome">Nome</label>
+            <input class="input" type="text" name="nome" value="{{request.POST.nome}}" placeholder="nome" >
+            <label class="label" for="nome">E-mail</label>
+            <input class="input" class="input-name" type="email" name="email" value="{{request.POST.email}}" placeholder="email" >
+            <label class="label" for="nome">Senha</label>
+            <input  class="input"class="input-password" type="password" name="senha" placeholder="Digite sua senha" > 
+            <label class="label" for="nome">Confirme a senha</label>
+            <input class="input" class="input-password" type="password" name="senha2" placeholder="Confirme sua senha" >
+            <button class="submit-button" type="submit">Cadastrar</button>
+            <a style="background-color: #fff;" href="{% url 'index' %}">Página inicial</a>
+        </form>
+    </div>
+</body>
+</html>

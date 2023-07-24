@@ -1,0 +1,107 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,600;0,700;0,900;1,100;1,200;1,300;1,400;1,500;1,700;1,800;1,900&display=swap" rel="stylesheet">
+
+    <title>The Blog</title>
+</head>
+<body>
+
+    <nav class="top-menu">   
+        <div class="nav_links">
+            {% for usuario in usuarios%}
+                {%if usuario.nivel_acesso == 'AU'%}
+                    <a href="{% url 'gera_pdf' %}">Gerar relatório de postagens</a>
+                    <a href="{% url 'criar_postagem' %}">Criar postagem</a>
+                {%endif%}
+
+            {%endfor%}
+                <a class="link-item" href="{% url 'index' %}">home</a>
+            {% if not user_id %}
+                <a class="link-item" href="{% url 'login' %}">Login</a>
+            {% else %}
+                <a class="link-item" href="{% url 'logout' %}">Sair</a>
+            {% endif %}
+         
+        </div>
+        <form action="{% url 'buscar' %}">
+
+            <input type="text" name="buscar" placeholder="O que está procurando...">
+            <button type="submit">Procurar</button>
+         
+        </form>
+
+    </nav>
+
+    <div class="blog-heading">
+        <span>The Blog</span>
+        <h3>Viva a tecnologia</h3>
+    </div>
+ 
+    <section id="blog">
+
+        {% if usuarios %}
+
+            {% for post in posts %}
+
+                <div class="blog-container">
+                    <div class="blog-box">
+                        {% if post.foto_postagem != '' %}
+                            <div class="container-img">
+                                <a href="{% url 'postagem' post.id %}"><img class="blog-img" src="{{ post.foto_postagem.url }}" alt=""></a>
+                            </div>
+                        {% endif %}    
+                            <div class="blog-text">
+                                <a href="{% url 'postagem' post.id %}"><p class="blog-title">{{post.titulo}}</p></a>               
+                                <p>{{post.publicacao}}</p>
+                                <a class="read-more" href="{% url 'postagem' post.id %}">Leia Mais</a>
+                                <p>Autor: {{post.usuario}}</p>
+                            </div>         
+                    </div>
+                </div>
+            {% endfor %}
+        {%endif%} 
+    </section>
+        
+    <section class="paginator" >
+        <div class="paginator-container">
+
+            {% if posts.has_other_pages %}
+                <ul class="pagination">
+                    
+                {% if posts.has_previous %}    
+                    <li >
+                        <a href="?page={{ posts.previous_page_number }}"></a>
+                    </li>
+            {% endif %} 
+            {% for pagina in posts.paginator.page_range %}
+            {% if posts.number == pagina %}  
+                <li class="page-item" >
+                    <a href="">{{ pagina }}</a>
+                </li>
+            {% else %}
+                <li class="page-item">
+                    <a  href="?page={{pagina}}">{{pagina}}</a>
+                </li>
+            {% endif %}    
+            {% endfor %}
+            {% if posts.has_next %}
+                <li>
+                    <a href="?page={{posts.next_page_number}}">{{ pagina }}</a>
+                </li>
+            {% endif %}
+           </ul>
+           {% endif %}
+         
+        </div>
+    </section>
+</body>
+</html>

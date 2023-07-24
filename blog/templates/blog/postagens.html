@@ -1,0 +1,71 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+
+    <title>Postagens</title>
+</head>
+<body>
+    <nav class="top-menu">   
+        <div class="nav_links">
+            <a class="link-item" href="{% url 'index' %}">home</a>
+        </div>
+        
+        <div class="nav_links">
+            <a class="link-item" href="{% url 'logout' %}">Logout</a>
+        </div>
+    </nav>
+    <div class="postagens-title">
+        <h1>{{postagem.titulo}}</h1>
+    </div>
+    <div class="image-postagem-container">
+        <img class="image-postagem" class="blog-img" src="{{ postagem.foto_postagem.url }}" alt="">
+    </div>
+
+    <div class="postagens-main-container">
+        <div class="postagens-content">
+            <h2>{{postagem.categoria}}</h2>
+            <p>{{postagem.publicacao}}</p>
+            <p> Por: {{postagem.usuario}}</p>
+                
+        </div>
+    </div>
+   
+    {% for usuario in usuarios %}
+
+        {%if usuario.nivel_acesso == 'AU'%}
+        <div class="container_editar_deletar">
+            <div class="editar">
+                <a href="{% url 'editar_postagem' postagem.id%}" type="button">Editar</a>
+            </div>
+            <div class="deletar">
+                <a href="{% url 'deleta_postagem' postagem.id %}" type="button">Deletar</a>
+            </div>
+        </div>
+        {%endif%}
+        {% if usuario.nivel_acesso == 'UC' %}
+            {% if not postagem.comentarios.all %}
+                Sem comentários... <br>  <a href="{% url 'criar_comentario' postagem.id %}">Adicionar comentário</a>
+            {% else %}
+                <a href="{% url 'criar_comentario' postagem.id %}">Adicionar novo comentário</a>
+
+                {% for comentario in postagem.comentarios.all %}
+                <hr>
+                <br>  
+                    <p><strong>Comentário: </strong>{{comentario.comentario}}</p>
+                    <br>
+                    <p><strong>autor</strong>: {{comentario.usuario}}</p>
+                    <p><strong>Publicado em:</strong> {{comentario.criadoEm}}</p>
+                    <hr>
+                {% endfor %} 
+            {% endif %}
+        {%endif%}
+    {%endfor%}
+   
+
+   
+</body>

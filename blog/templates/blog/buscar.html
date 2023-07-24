@@ -1,0 +1,63 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,600;0,700;0,900;1,100;1,200;1,300;1,400;1,500;1,700;1,800;1,900&display=swap" rel="stylesheet">
+
+    <title>The Blog</title>
+</head>
+<body>
+
+    <nav class="top-menu">   
+        <div class="nav_links">
+            <a class="link-item" href="{% url 'index' %}">home</a>
+        </div>
+        <div class="nav_links">   
+            <a class="link-item" href="{% url 'logout' %}">Sair</a>
+        </div>
+    </nav>
+
+    <div class="blog-heading">
+        <span>The Blog</span>
+        <!-- <h3>Viva a tecnologia</h3> -->
+    </div>
+ 
+    <section id="blog">
+
+        {% if usuario %}
+            {% if postagem %}
+
+                {% for post in postagem %}
+                    
+                        <div class="blog-container">
+                            <div class="blog-box">
+                                {% if post.foto_postagem %}
+                                    <div class="blog-img">
+                                        <a href="{% url 'postagem' post.id %}"><img class="blog-img" src="{{ post.foto_postagem.url }}" alt=""></a>
+                                    </div>
+                                {% endif %}    
+                                    <div class="blog-text">
+                                        <a href="{% url 'postagem' post.id %}"><p class="blog-title">{{post.titulo}}</p></a>               
+                                        <p>{{post.publicacao}}</p>
+                                        <a class="read-more" href="{% url 'postagem' post.id %}">Leia Mais</a>
+                                        <p>Autor: {{post.usuario}}</p>
+                                    </div>         
+                            </div>
+                        </div>
+                {% endfor %}
+            {% else %}
+                <p>Postagem não encontrada</p>
+            {% endif %}    
+        {% else %}    
+        {%endif%}
+      
+    </section>
+</body>
+</html>

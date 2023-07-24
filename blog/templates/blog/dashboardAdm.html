@@ -1,0 +1,46 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+
+    <title>Document</title>
+</head>
+<body>  
+    <nav class="top-menu">   
+        <div class="nav_links">
+            <a  style="margin-left: 1120px;" class="link-item" href="{% url 'logout' %}">Sair</a>
+        </div>
+    </nav>
+
+    <div class="login-container">
+        <h1 class="post_create_heading">Cadastrar autor:</h1>
+        <form class="form-login" action="{% url 'cadastro_autor' %}" method="POST">
+            {%  include 'partials/_messages.html'%}
+            {% csrf_token %}
+
+            <label class="label" for="nome">Nome:</label>
+            <input class="input" type="text" name="nome" placeholder="nome" required>
+            <label class="label" for="email">E-mail:</label>
+            <input class="input"  type="email" name="email" placeholder="email" required>
+            <label class="label" for="senha">Senha:</label>
+            <input class="input"  type="password" name="senha" placeholder="Digite uma senha" required>
+            <label class="label" for="senha2">Confirme a senha:</label> 
+            <input class="input"  type="password" name="senha2" placeholder="Confirme a senha" required>
+            <button class="btn-publicar" type="submit">Cadastrar</button>
+        </form>
+
+        <h1 class="post_create_heading">Cadastrar categoria:</h1>
+            <form class="form-login" action="{% url 'cadastro_categoria' %}" method="POST">
+                {%  include 'partials/_messages.html'%}
+                {% csrf_token %}    
+                <label class="label" for="categoria">Categoria:</label>
+                <input  class="input" type="text" name="categoria"placeholder="Informe uma categoria">
+                <button class="btn-publicar" type="submit">Cadastrar</button>
+            </form>
+    </div>
+</body>
+</html>

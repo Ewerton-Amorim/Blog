@@ -1,0 +1,37 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <title>Document</title>
+</head>
+
+<body>
+    <a href="{% url 'criar_postagem'  %}">Criar postagem</a>
+
+    <div class="cow">
+
+     <table class="table">
+        <tr>
+          <th class="post-th-table">Título</th>
+          <th>Categoria</th>
+          <th>Publicação</th>
+        </tr>
+        {% for postagens in postagens %}
+        <tr>
+          <td class="pots-td-table">{{postagens.titulo}}</td>
+          <td class="pots-td-table">{{postagens.categoria}}</td>
+          <td class="pots-td-table">{{postagens.publicacao}}</td>
+        </tr>
+        {% endfor %}
+      </table>
+    </div>
+
+
+</body>
+
+</html>
